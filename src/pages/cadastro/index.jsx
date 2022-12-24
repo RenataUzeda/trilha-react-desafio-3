@@ -1,5 +1,5 @@
 import { useNavigate  } from "react-router-dom";
-import { MdEmail, MdLock } from 'react-icons/md'
+import { MdEmail, MdLock, MdPerson } from 'react-icons/md'
 import { Button } from '../../components/Button';
 import { Header } from '../../components/Header';
 import { Input } from '../../components/Input';
@@ -8,9 +8,9 @@ import { api } from '../../services/api';
 import { useForm } from "react-hook-form";
 
 
-import { Container, Title, Column, TitleLogin, SubTitleLogin, EsqueciText, CriarText, Row, Wrapper } from './styles';
+import { Container, Title, Column, TitleCadastro, SubTitleCadasto, PrivacityText, LoginText, Row, Wrapper, LoginTextColor } from './styles';
 
-const Login = () => {
+const Cadastro = () => {
 
     const navigate = useNavigate()
 
@@ -18,9 +18,9 @@ const Login = () => {
         navigate('/feed')
     }
 
-    const handleClickRegister = () => {
-        navigate('/cadastro')
-    }
+    const handleClickLogIn = () => {
+        navigate("/login");
+      };
 
     const { control, handleSubmit, formState: { errors  } } = useForm({
         reValidateMode: 'onChange',
@@ -53,18 +53,21 @@ const Login = () => {
             </Column>
             <Column>
                 <Wrapper>
-                <TitleLogin>Faça seu cadastro</TitleLogin>
-                <SubTitleLogin>Faça seu login e make the change._</SubTitleLogin>
+                <TitleCadastro>Comece agora grátis</TitleCadastro>
+                <SubTitleCadasto>Crie sua conta e make the change._</SubTitleCadasto>
                 <form onSubmit={handleSubmit(onSubmit)}>
+                    <Input placeholder="Nome completo" leftIcon={<MdPerson />} name="email"  control={control} />
+                    {errors.email && <span>Nome é obrigatório</span>}
                     <Input placeholder="E-mail" leftIcon={<MdEmail />} name="email"  control={control} />
                     {errors.email && <span>E-mail é obrigatório</span>}
                     <Input type="password" placeholder="Senha" leftIcon={<MdLock />}  name="senha" control={control} />
                     {errors.senha && <span>Senha é obrigatório</span>}
-                    <Button title="Entrar" variant="secondary" onClick={handleClickSignIn} type="submit"/>
+                    <Button title="Criar minha conta" variant="secondary" onClick={handleClickSignIn} type="submit"/>
                 </form>
                 <Row>
-                    <EsqueciText>Esqueci minha senha</EsqueciText>
-                    <CriarText onClick={handleClickRegister}>Criar Conta</CriarText>
+                    <PrivacityText>Ao clicar em "criar minha conta grátis", declaro que aceito as Políticas de Privacidade e os Termos de Uso da DIO.</PrivacityText>
+                    <LoginText>Já tenho conta.</LoginText>
+                    <LoginTextColor onClick={handleClickLogIn}>Fazer login</LoginTextColor>
                 </Row>
                 </Wrapper>
             </Column>
@@ -72,4 +75,4 @@ const Login = () => {
     </>)
 }
 
-export { Login }
+export { Cadastro }
